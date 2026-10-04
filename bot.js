@@ -1,32 +1,27 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const express = require('express');
-const QRCode = require('qrcode');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 let latestQr = '';
 
 // Servidor Web para exibir o QR Code em imagem no navegador
-app.get('/', async (req, res) => {
+app.get('/', (req, res) => {
     if (!latestQr) {
-        return res.send('<h2>O QR Code ainda está a gerar ou o bot já está conectado!</h2>');
+        return res.send('<h2 style="font-family:sans-serif;text-align:center;margin-top:50px;">O QR Code ainda está a gerar ou o bot já está conectado! Recarregue a página em alguns segundos.</h2>');
     }
-    try {
-        const qrImage = await QRCode.toDataURL(latestQr);
-        res.send(`
-            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;">
-                <h2>Aponte a câmara do WhatsApp para este QR Code:</h2>
-                <img src="${qrImage}" style="width:300px;height:300px;border:1px solid #ccc;padding:10px;border-radius:8px;" />
-            </div>
-        `);
-    } catch (err) {
-        res.send('Erro ao gerar imagem do QR Code.');
-    }
+    const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(latestQr)}`;
+    res.send(`
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;">
+            <h2>Aponte a câmara do WhatsApp para este QR Code:</h2>
+            <img src="${qrImageUrl}" style="width:300px;height:300px;border:1px solid #ccc;padding:10px;border-radius:8px;" />
+        </div>
+    `);
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Servidor HTTP a rodar na porta ${PORT}`);
 });
 
