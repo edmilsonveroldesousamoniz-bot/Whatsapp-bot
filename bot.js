@@ -7,14 +7,14 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
-    res.send('Bot do Verol est  ativo 24/7!');
+    res.send('Bot do Verol estÂ  ativo 24/7!');
 });
 
 app.listen(PORT, () => {
     console.log(`Servidor HTTP a rodar na porta ${PORT}`);
 });
 
-// Configura‡Æo do Bot
+// Configuraâ€¡Ã†o do Bot
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
@@ -34,26 +34,26 @@ client.on('ready', () => {
 client.on('message', async (message) => {
     const texto = message.body.toLowerCase().trim();
 
-    if (texto === 'oi' || texto === 'ol ' || texto === 'ola') {
-        await message.reply('Ol ! Sou o bot do Verol');
+    if (texto === 'oi' || texto === 'olÂ ' || texto === 'ola') {
+        await message.reply('OlÂ ! Sou o bot do Verol');
     } 
     else if (texto === 'menu') {
         await message.reply(
             'MENU DO BOT\n\n' +
-            '1 - Pre‡os\n' +
-            '2 - Informa‡äes\n' +
+            '1 - Preâ€¡os\n' +
+            '2 - Informaâ€¡Ã¤es\n' +
             '3 - Ajuda\n\n' +
-            'Digite uma op‡Æo.'
+            'Digite uma opâ€¡Ã†o.'
         );
     } 
     else if (texto === '1') {
-        await message.reply('Consulte os nossos pre‡os com o administrador.');
+        await message.reply('Consulte os nossos preâ€¡os com o administrador.');
     } 
     else if (texto === '2') {
-        await message.reply('Bem-vindo! Este ‚ o bot autom tico do Verol.');
+        await message.reply('Bem-vindo! Este â€š o bot automÂ tico do Verol.');
     } 
     else if (texto === '3') {
-        await message.reply('Digite *menu* para ver as op‡äes dispon¡veis.');
+        await message.reply('Digite *menu* para ver as opâ€¡Ã¤es disponÂ¡veis.');
     }
 });
 
